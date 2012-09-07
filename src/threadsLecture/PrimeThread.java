@@ -1,4 +1,4 @@
-package edu.uwec.cs.stevende.threads;
+package threadsLecture;
 
 public class PrimeThread implements Runnable {
 

@@ -1,4 +1,4 @@
-package edu.uwec.cs245.convolution;
+package convolution;
 
 
 public class Convolution{
