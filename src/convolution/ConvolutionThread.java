@@ -26,7 +26,7 @@ public class ConvolutionThread implements Runnable{
 		int startWidth = width/4 * threadNum;
 		int endWidth = width/4 * (threadNum + 1);
 		
-		for (int x = startWidth; x < endWidth; x++) {
+		for (int x = startWidth; x < endWidth; x++) {			
 			for (int y = 0; y < height; y++) {
 				double redResult = 0, greenResult = 0, blueResult = 0;
 				for (int u = 0; u < maskWidth; u++) {
