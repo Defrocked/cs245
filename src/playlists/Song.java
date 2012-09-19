@@ -1,6 +1,6 @@
 package playlists;
 
-public class Song {
+public class Song implements Comparable<Song> {
 
 	private String title;
 	private Artist artist;
@@ -23,17 +23,35 @@ public class Song {
 	public boolean equals(Object o) {
 		Song s = (Song) o;
 
-		return ((this.title == s.title) && (this.artist == s.artist) && (this.runningTime == s.runningTime));
+		return ((this.title.equals(s.title)) && (this.artist.equals(s.artist)) && (this.runningTime == s.runningTime));
 	}
 
 	public int compareTo(Song o) {
-		boolean result;
-		int t = 1;
-
-		result = (this.title.equals(o));
-		if (result = true) {
-			t = 0;
+		int tmp;
+		tmp = compareTitle(o);
+		
+		System.out.println("stage1");
+		if (tmp == 0) {
+			System.out.println("stage2");
+			tmp = ( o.runningTime - this.runningTime);	
+			
+			
+			if (tmp != 0) {
+				
+				System.out.println("stage3");
+				tmp = o.artist.compareTo(o);
+				
+			}
 		}
-		return t;
+		return tmp;
+	}
+	
+	private int compareTitle(Song o){
+		String sub1 = this.title.substring(0,1);
+		String sub2 = o.title.substring(0,1);
+		String array = "abcdefghijklmnopqrstuvwxyz1234567890";
+		int temp = 	array.indexOf(sub1);
+		int t = array.indexOf(sub2);
+		return temp - t;
 	}
 }

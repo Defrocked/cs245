@@ -21,9 +21,8 @@ public class Artist {
 	public boolean equals(Object o) {
 		Artist a = (Artist)o;
 		
-		return ((this.lastName == a.lastName) &&
-				(this.firstName == a.firstName) &&
-				(this.songs == a.songs));
+		return ((this.lastName.equals(a.lastName)) &&
+				(this.firstName.equals(a.firstName)));
 	}
 	
 	public void addSong(Song s){
@@ -31,13 +30,24 @@ public class Artist {
 	}
 	
 	public int compareTo(Song o) {
-		boolean result;
-		int t = 1;
-
-		result = (this.lastName.equals(o));
-		if (result = true) {
-			t = 0;
-		}
+		int t = 0;
+		int temp = 0;
+		int tmp = 0;
+		String sub1 = "";
+		String sub2 = "";
+		sub2 = o.toString();
+		Scanner in = new Scanner(sub2);
+		in.useDelimiter(" ");
+		sub2 = in.next();
+		sub1 = this.lastName.substring(0, 1);
+		sub2 = sub2.substring(0, 1);
+		sub1.toLowerCase();
+		sub2.toLowerCase();
+		String array = "abcdefghijklmnopqrstuvwxyz1234567890";
+		temp = array.indexOf(sub1);
+		tmp = array.indexOf(sub2);
+		t = temp - tmp;
+		in.close();
 		return t;
 	}
 	

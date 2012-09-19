@@ -3,10 +3,10 @@ package playlists;
 import java.util.*;
 
 
-public class Playlist implements Comparable<Song> {
+public class Playlist {
 
 	private String name;
-	private List<Song> songs;
+	private ArrayList<Song> songs;
 
 	public Playlist(String name) {
 		this.name = name;
@@ -40,27 +40,25 @@ public class Playlist implements Comparable<Song> {
 		}
 		return temp;
 	}
-
-	@Override
+	
 	public int compareTo(Song o) {
-		boolean result;
+		int temp;
 		int tmp;
-		int t = 1;
 
 		tmp = (songs.indexOf(o));
-		result = (songs.get(tmp).equals(o));
-		if (result = true){
-			t = 0;
-		}
-		return t;
+		temp = (Song.getRunTime(songs.get(tmp)) - Song.getRunTime(o));
+		
+		return temp;
 	}
+	
+	
 
 	public boolean contains(Song o) {
 		return songs.contains(o);
 	}
 
 	public void sortBySong() {
-		Comparable.sort(songs);
+		Collections.sort(songs);
 
 	}
 

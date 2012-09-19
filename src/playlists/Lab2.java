@@ -47,8 +47,10 @@ public class Lab2 {
 		// Ask some questions
 		System.out.println(pl1.contains(s2));
 		System.out.println(pl1.contains(new Song("foo", a1, 200)));
+//		Song s6 = (new Song("foo", new Artist("Morrison", "Mike"), 200));
+//		pl1.addSong(s6);
+//		System.out.println(pl1.contains(s6));
 		System.out.println(pl1.contains(new Song("foo", new Artist("Morrison", "Mike"), 200)));
-		
 		System.out.println(pl1.runningTime());
 
 		// Sort the playlist and display the result
