@@ -4,7 +4,8 @@ public class LList<T> implements ListIf<T> {
 
 	// Nested helper class
 	private class Node {
-		// These are private, but LList can see them since Node is a nested class
+		// These are private, but LList can see them since Node is a nested
+		// class
 		private T element;
 		private Node next;
 
@@ -67,7 +68,7 @@ public class LList<T> implements ListIf<T> {
 	// Remove
 	public T remove(int index) {
 		T result = null;
-		
+
 		// Special case for adding to start
 		if (index == 0) {
 			result = first.element;
@@ -85,47 +86,63 @@ public class LList<T> implements ListIf<T> {
 		}
 
 		size--;
-		
+
 		return result;
 	}
 
-	@Override
 	public void set(int index, T o) {
-		// TODO Auto-generated method stub
-		
+		int runs = 0;
+		@SuppressWarnings("unchecked")
+		Node n = (Node) o;
+		while(n != null){
+			if(runs == index){
+				n.element = o;
+			}
+			runs++;
+			n = n.next;
+		}
+
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean remove(T o) {
-		// TODO Auto-generated method stub
-		return false;
+		int index = indexOf(o);
+		
+		if(index == -1){ //DNE
+			return false;
+		}else{
+			((ListIf<T>) o).remove(index);
+		}
+
+		
+		return true;
 	}
 
 	@Override
 	public int size() {
-//		Node n = (Node)o;
-//		int count = 0;
-//		while(n != null){
-//			count++;
-//			n = n.next;
-//		}
-//		return count;
-		return size;  //which of these is correct??
+		// Node n = (Node)o;
+		// int count = 0;
+		// while(n != null){
+		// count++;
+		// n = n.next;
+		// }
+		// return count;
+		return size; // which of these is correct??
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean contains(T o) {
-		Node n = (Node)o;
-		
-		while(n != null){
-			if(((LList<T>) o).contains(o)){
+		Node n = (Node) o;
+
+		while (n != null) {
+			if (((LList<T>) o).contains(o)) {
 				return true;
 			}
 			n = n.next;
 		}
-		
-		
+
 		return false;
 	}
 
@@ -134,8 +151,8 @@ public class LList<T> implements ListIf<T> {
 	public int indexOf(T o) {
 		Node n = (Node) o;
 		int count = 0;
-		while(n != null){
-			if(((LList<T>) o).contains(n.element)){
+		while (n != null) {
+			if (((LList<T>) o).contains(n.element)) {
 				return count;
 			}
 			count++;
@@ -143,17 +160,17 @@ public class LList<T> implements ListIf<T> {
 		}
 		return -1;
 	}
-	
-	public void toString(T o){
+
+	public void toString(T o) {
 		@SuppressWarnings("unchecked")
-		Node n = (Node)o;
+		Node n = (Node) o;
 		System.out.println("[");
-		
-		while(n != null){
+
+		while (n != null) {
 			System.out.println(" " + n.element + " ");
 			n = n.next;
 		}
-		
+
 		System.out.println("]");
 	}
 

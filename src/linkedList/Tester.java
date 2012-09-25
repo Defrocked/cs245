@@ -11,7 +11,8 @@ public class Tester {
 		
 		l.remove(1);
 		
-		System.out.println(l);
+		System.out.println(l); //wtf is this memory address i'm getting
+		System.out.println(l.toString());
 		
 		
 		
