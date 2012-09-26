@@ -92,10 +92,10 @@ public class LList<T> implements ListIf<T> {
 
 	public void set(int index, T o) {
 		int runs = 0;
-		@SuppressWarnings("unchecked")
-		Node n = (Node) o;
-		while(n != null){
-			if(runs == index){
+		Node n = first;
+		
+		while (n != null) {
+			if (runs == index) {
 				n.element = o;
 			}
 			runs++;
@@ -104,40 +104,31 @@ public class LList<T> implements ListIf<T> {
 
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public boolean remove(T o) {
 		int index = indexOf(o);
-		
-		if(index == -1){ //DNE
-			return false;
-		}else{
-			((ListIf<T>) o).remove(index);
-		}
 
-		
+		if (index == -1) { // DNE
+			return false;
+		} else {
+			remove(index);
+		}
 		return true;
+	
 	}
 
 	@Override
 	public int size() {
-		// Node n = (Node)o;
-		// int count = 0;
-		// while(n != null){
-		// count++;
-		// n = n.next;
-		// }
-		// return count;
-		return size; // which of these is correct??
+
+		return size;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public boolean contains(T o) {
-		Node n = (Node) o;
+		Node n = first;
 
 		while (n != null) {
-			if (((LList<T>) o).contains(o)) {
+			if (((String) n.element).contains((CharSequence) o)) {
 				return true;
 			}
 			n = n.next;
@@ -146,13 +137,14 @@ public class LList<T> implements ListIf<T> {
 		return false;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public int indexOf(T o) {
-		Node n = (Node) o;
+		Node n = first;
+		// not Node n = (Node) o; ????
 		int count = 0;
 		while (n != null) {
-			if (((LList<T>) o).contains(n.element)) {
+			if(n.element.equals(o)){
+			//if (((String) n.element).contains((CharSequence) o)) {
 				return count;
 			}
 			count++;

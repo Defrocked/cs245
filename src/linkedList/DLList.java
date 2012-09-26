@@ -1,10 +1,10 @@
 package linkedList;
 
 
+
 public class DLList<T> implements ListIf<T> {
-
-
-		// Nested helper class
+	
+	// Nested helper class
 		private class Node {
 			// These are private, but LList can see them since Node is a nested
 			// class
@@ -20,14 +20,14 @@ public class DLList<T> implements ListIf<T> {
 		}
 
 		// LList's instance variables
+		private Node last;
 		private Node first;
 		private int size;
-		private Node last;
 
 		// Default constructor
 		public DLList() {
 			first = null; // empty list
-			last = null;  // empty list
+			last = null;
 			size = 0;
 		}
 
@@ -56,6 +56,7 @@ public class DLList<T> implements ListIf<T> {
 				}
 				nn.next = n.next;
 				n.next = nn;
+				
 			}
 
 			size++;
@@ -79,6 +80,7 @@ public class DLList<T> implements ListIf<T> {
 			if (index == 0) {
 				result = first.element;
 				first = first.next;
+				last = first.next; 											//CHANGE FOR DDL
 
 			} else { // works for middle and end cases
 
@@ -88,7 +90,8 @@ public class DLList<T> implements ListIf<T> {
 					n = n.next;
 				}
 				result = n.next.element;
-				n.next = n.next.next;
+				n.prev = last;												 //CHANGE FOR DDL
+				n.next = n.next.next;					
 			}
 
 			size--;
@@ -98,10 +101,10 @@ public class DLList<T> implements ListIf<T> {
 
 		public void set(int index, T o) {
 			int runs = 0;
-			@SuppressWarnings("unchecked")
-			Node n = (Node) o;
-			while(n != null){
-				if(runs == index){
+			Node n = first;
+			
+			while (n != null) {
+				if (runs == index) {
 					n.element = o;
 				}
 				runs++;
@@ -110,40 +113,31 @@ public class DLList<T> implements ListIf<T> {
 
 		}
 
-		@SuppressWarnings("unchecked")
 		@Override
 		public boolean remove(T o) {
 			int index = indexOf(o);
-			
-			if(index == -1){ //DNE
-				return false;
-			}else{
-				((ListIf<T>) o).remove(index);
-			}
 
-			
+			if (index == -1) { // DNE
+				return false;
+			} else {
+				remove(index);
+			}
 			return true;
+		
 		}
 
 		@Override
 		public int size() {
-			// Node n = (Node)o;
-			// int count = 0;
-			// while(n != null){
-			// count++;
-			// n = n.next;
-			// }
-			// return count;
-			return size; // which of these is correct??
+
+			return size;
 		}
 
-		@SuppressWarnings("unchecked")
 		@Override
 		public boolean contains(T o) {
-			Node n = (Node) o;
+			Node n = first;
 
 			while (n != null) {
-				if (((LList<T>) o).contains(o)) {
+				if (((String) n.element).contains((CharSequence) o)) {
 					return true;
 				}
 				n = n.next;
@@ -152,13 +146,14 @@ public class DLList<T> implements ListIf<T> {
 			return false;
 		}
 
-		@SuppressWarnings("unchecked")
 		@Override
 		public int indexOf(T o) {
-			Node n = (Node) o;
+			Node n = first;
+			// not Node n = (Node) o; ????
 			int count = 0;
 			while (n != null) {
-				if (((LList<T>) o).contains(n.element)) {
+				if(n.element.equals(o)){
+
 					return count;
 				}
 				count++;
@@ -168,8 +163,7 @@ public class DLList<T> implements ListIf<T> {
 		}
 
 		public void toString(T o) {
-			@SuppressWarnings("unchecked")
-			Node n = (Node) o;
+			Node n = first;
 			System.out.println("[");
 
 			while (n != null) {
@@ -180,6 +174,4 @@ public class DLList<T> implements ListIf<T> {
 			System.out.println("]");
 		}
 
-	
-
-}
+	}
