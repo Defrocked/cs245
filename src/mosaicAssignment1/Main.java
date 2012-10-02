@@ -24,6 +24,10 @@ public class Main {
 				vertMosaicSize, horzNumTiles, vertNumTiles);
 		// Read the original file which we will turn into a mosaic
 		UWECImage originalImage = new UWECImage(originalFilename);
+		
+//		//TESTS TO MAKE SURE THE ORIGINAL IMAGE IS IN THE RIGHT PLACE BY DISPLAYING IT
+//		ImagePanel ima = new ImagePanel(originalImage);
+	
 		// Form a mosaic of the original image
 		UWECImage mosaicImage = mm.createMosaic(originalImage);
 		// Write out the mosaic version
