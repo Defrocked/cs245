@@ -153,17 +153,21 @@ public class LList<T> implements ListIf<T> {
 		return -1;
 	}
 
-	public void toString(T o) {
-		@SuppressWarnings("unchecked")
-		Node n = (Node) o;
-		System.out.println("[");
+	public String toString() {
+		Node n = first;
+		String result = ("[");
 
 		while (n != null) {
-			System.out.println(" " + n.element + " ");
+			result +=(n.element + ", ");
 			n = n.next;
 		}
-
-		System.out.println("]");
+		if (result.length() > 2) {
+			result = result.substring(0, result.length() - 2);
+		}
+		result += "]";
+		
+		
+		return result;
 	}
 
 }

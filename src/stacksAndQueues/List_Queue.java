@@ -3,43 +3,61 @@ package stacksAndQueues;
 import linkedList.*;
 
 public class List_Queue<T> implements QueueInterface<T> {
-	{
+
+	private LList<T> l;
+
+	private int capacity;
+
+	List_Queue(int capacity) {
+		this.capacity = capacity;
+		
+		this.l = new LList<T>();
 
 	}
 
 	@Override
 	public boolean isEmpty() {
-		
-		return first == null;
+
+		return l.size() == 0;
 	}
 
 	@Override
 	public boolean isFull() {
-		
-		return false;
+
+		return l.size() == capacity;
 	}
 
 	@Override
 	public int getSize() {
-		
-		return size;
+
+		return l.size();
 	}
 
 	@Override
 	public T peek() {
-		
-		return first;
+
+			if(l.size() == 0){
+				return null;
+			}
+			return l.get(0);
 	}
 
 	@Override
 	public T dequeue() {
-		// TODO Auto-generated method stub
-		return null;
+
+		return l.remove(0);
 	}
 
 	@Override
 	public void enqueue(T o) {
-		// TODO Auto-generated method stub
+		l.add(o);
+
+	}
+
+	@Override
+	public String toString() {
+
+		return l.toString();
 
 	}
 }

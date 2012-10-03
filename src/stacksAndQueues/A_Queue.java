@@ -6,13 +6,7 @@ public class A_Queue<T> implements QueueInterface<T> {
 	private int rear;
 	private int size;
 	private int capacity;
-	
-	/*
-	 * NOTES FOR LAB
-	 * ISFULL AND ISEMPTY ARE FUCKED
-	 * SUBSTRING  IS FUCKED
-	 * TOSTRING IS MESSED UP, BECAUSE OF THE WAY THE CIRCULAR ARRAY MOVES CIRCULARLY
-	 */
+
 
 	@SuppressWarnings("unchecked")
 	A_Queue(int capacity) {
@@ -29,7 +23,7 @@ public class A_Queue<T> implements QueueInterface<T> {
 	@Override
 	public boolean isFull() {
 
-		return front == capacity - 1;
+		return size == capacity;
 	}
 
 	@Override
@@ -48,12 +42,12 @@ public class A_Queue<T> implements QueueInterface<T> {
 	public T dequeue() {
 		T temp = queue[front];
 		queue[front] = null;
-		if(front == (capacity - 1)){
+		if (front == (capacity - 1)) {
 			front = 0;
 		} else {
 			front++;
 		}
-		
+		size--;
 		return temp;
 
 	}
@@ -62,12 +56,13 @@ public class A_Queue<T> implements QueueInterface<T> {
 	public void enqueue(T o) {
 		try {
 			queue[rear] = o;
-			
-			if(rear == (capacity - 1)){
+
+			if (rear == (capacity - 1)) {
 				rear = 0;
-			} else{
+			} else {
 				rear++;
 			}
+			size++;
 		} catch (ArrayIndexOutOfBoundsException e) {
 			throw new RuntimeException("QUEUE FULL: S O T P");
 		}
@@ -77,13 +72,17 @@ public class A_Queue<T> implements QueueInterface<T> {
 	public String toString() {
 		String result = "[";
 		int i = 0;
-		while (i < capacity  && queue[i] != null) {
-			result += queue[i] + ", ";
+		while (i < capacity) {
+			if (queue[i] != null) {
+				result += queue[i] + ", ";
+			}
 
 			i++;
 		}
-		//no idea why this gives me string index out of range
-	//	result = result.substring(0, result.length() - 2);
+		
+		if (result.length() > 2) {
+			result = result.substring(0, result.length() - 2);
+		}
 		result += "]";
 
 		return result;
