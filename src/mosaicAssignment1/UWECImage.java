@@ -26,7 +26,7 @@ public class UWECImage {
 
 	// Make a blank image given the size
 	public UWECImage(int x, int y) {
-		
+
 		this.im = new BufferedImage(x, y, BufferedImage.TYPE_INT_RGB);
 
 		// Create a graphics context for the new BufferedImage
@@ -105,39 +105,84 @@ public class UWECImage {
 			System.exit(1);
 		}
 	}
+
 	/**
-	 * Mutates the size of the image you call this method on
-	 * to the new size determined by the parameters
-	 * After this, deposits the new image into an ArrayList instance variable
+	 * Mutates the size of the image you call this method on to the new size
+	 * determined by the parameters After this, deposits the new image into an
+	 * ArrayList instance variable
 	 * 
 	 * @param newWidth
 	 * @param newHeight
 	 */
-	public void scaleImage(int newWidth, int newHeight){
-		//create a new empty buffered image with the newW and H
-		BufferedImage newIm = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
-		
-		//scale factor between the old and new image sizes
+	public void scaleImage(int newWidth, int newHeight) {
+		// create a new empty buffered image with the newW and H
+		BufferedImage newIm = new BufferedImage(newWidth, newHeight,
+				BufferedImage.TYPE_INT_RGB);
+
+		// scale factor between the old and new image sizes
 		double scaleX = im.getWidth() / newIm.getWidth();
 		double scaleY = im.getHeight() / newIm.getHeight();
 		int rgb = 0;
-		
-		//double loop to run through the new image to move pixel colours
-		for(int i = 0; i< newIm.getWidth(); i++){
-			for(int j = 0; j< newIm.getHeight(); j++){
-				//sets rgb to the colour at the scaled location on the original picture
-				rgb = im.getRGB((int)(i * scaleX), (int)(j * scaleY));
-				//puts the colour into the new image
+
+		// double loop to run through the new image to move pixel colours
+		for (int i = 0; i < newIm.getWidth(); i++) {
+			for (int j = 0; j < newIm.getHeight(); j++) {
+				// sets rgb to the colour at the scaled location on the original
+				// picture
+				rgb = im.getRGB((int) (i * scaleX), (int) (j * scaleY));
+				// puts the colour into the new image
 				newIm.setRGB(i, j, rgb);
 			}
 		}
-		//if this arraylist doesn't work, remember to remove the instance variable and initialization in 
-		//the 2nd UWECImage constuctor, otherwise, hooray
+
+		System.out.println(newIm.getHeight());
+		System.out.println(newIm.getWidth());
 		
-		//adds the new image into an instance variable arraylist
+		// if this arraylist doesn't work, remember to remove the instance
+		// variable and initialization in
+		// the 2nd UWECImage constuctor, otherwise, hooray
+
+		// adds the new image into an instance variable arraylist
 		imList.add(newIm);
-		
 	}
 	
+	public  ArrayList<BufferedImage> getImList(){
+		//WE NEED TO FIGURE OUT HOW TO CONVERT BUFFEREDIMAGES INTO UWECIMAGES
+		return imList;
+	}
+
+	public Color averageImageColor() {
+		return averageImageColor(0, 0, getWidth(), getHeight());
+	}
+
+	public Color averageImageColor(int startX, int startY, int width, int height) {
+		int numPixels = width * height;
+		int totalRed = 0;
+		int totalBlue = 0;
+		int totalGreen = 0;
+		int aveRed;
+		int aveBlue;
+		int aveGreen;
+
+		if ((startX + width > getWidth()) || (startY + height > getHeight())) {
+			System.out.println("Coordinants out of picture.");
+			System.exit(0); // exits program??
+		}
+
+		for (int y = startY; y < height; y++) {
+			for (int x = startX; x < width; x++) {
+				totalRed += getRed(x, y);
+				totalBlue += getBlue(x, y);
+				totalGreen += getGreen(x, y);
+			}
+		}
+		aveRed = totalRed / numPixels;
+		aveBlue = totalBlue / numPixels;
+		aveGreen = totalGreen / numPixels;
+
+		Color aveColor = new Color(aveRed, aveGreen, aveBlue);
+
+		return aveColor;
+	}
 
 }
