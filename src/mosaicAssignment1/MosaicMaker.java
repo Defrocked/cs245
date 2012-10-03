@@ -84,29 +84,33 @@ public class MosaicMaker {
 	 * @return
 	 */
 	public UWECImage createMosaic(UWECImage image) {
-		int red;
-		int green;
-		int blue;
+		int red = 0;
+		int green = 0;
+		int blue = 0;
 		// scales our mosaic image
 		image.scaleImage(horzMosaicSize, vertMosaicSize);
-		
-		System.out.println(image.getHeight());
-		System.out.println(image.getWidth());
 
 		// create a new blank uwecimage
 		UWECImage blankMosaic = new UWECImage(horzMosaicSize, vertMosaicSize);
 
 		// makes an imagepanel so we can see wtf we are doing
-		ImagePanel ima = new ImagePanel(blankMosaic);
-		ImagePanel ima2 = new ImagePanel(image);
-
+		ImagePanel ima = new ImagePanel(blankMosaic); 
+		
+	
+			System.out.println(imageColourAL.toString());
+			Color aveColour;
+			ArrayList<Color> testing = new ArrayList<Color>();
+			System.out.println("start");
 		// LOOPAN increment by 10x10 since that is the size of our squares?
-		for (int i = 0; i < blankMosaic.getWidth(); i +=tileWidth) {
-			for (int j = 0; j < blankMosaic.getHeight(); j += tileHeight) {
-				// set the avecolour to for 10x10 squares
-				Color aveColour = image.averageImageColor(i, j, tileWidth,
-						tileHeight);
-				
+		for (int i = 0; i < blankMosaic.getWidth(); i += (tileWidth)) {
+			
+			for (int j = 0; j < blankMosaic.getHeight(); j += (tileHeight)) {
+				// set the avecolour to for 10x10 squares 
+				//I ADDED i+ and j+ TO THESE WHILE TESTING
+				aveColour = image.averageImageColor(i, j, i+  (tileWidth),
+					j+(tileHeight));
+				System.out.println(aveColour);
+				//testing.add(aveColour);
 //				System.out.println(i);
 //				System.out.println(j);
 
@@ -121,20 +125,20 @@ public class MosaicMaker {
 						red = bestTile.getRed(k, l);
 						green = bestTile.getGreen(k, l);
 						blue = bestTile.getBlue(k, l);
-						// puts the colour into the new image
+						// puts the colour into the new image;
 						blankMosaic.setRGB(k, l, red, green, blue);
 						//blankMosaic.setRGB(k,l,50,70,80);
 //						System.out.println(findBestTile(aveColour));
 						
 						
-						ima.repaint();
-
+						
 					}
 				}
 			}
 		}
+	//	System.out.println(testing.toString());
 
-		return image;
+		return blankMosaic;
 	}
 	
 	// Find the tile with the best match to the mosaic.

@@ -4,15 +4,12 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
-import java.util.ArrayList;
 
 public class UWECImage {
 	private BufferedImage im;
-	private ArrayList<BufferedImage> imList;
 
 	// Make an image from the given filename
 	public UWECImage(String filename) {
-		this.imList = new ArrayList<BufferedImage>();
 		File f = new File(filename);
 
 		try {
@@ -134,22 +131,9 @@ public class UWECImage {
 				newIm.setRGB(i, j, rgb);
 			}
 		}
-
-		System.out.println(newIm.getHeight());
-		System.out.println(newIm.getWidth());
-		
-		// if this arraylist doesn't work, remember to remove the instance
-		// variable and initialization in
-		// the 2nd UWECImage constuctor, otherwise, hooray
-
-		// adds the new image into an instance variable arraylist
-		imList.add(newIm);
+		im = newIm;
 	}
 	
-	public  ArrayList<BufferedImage> getImList(){
-		//WE NEED TO FIGURE OUT HOW TO CONVERT BUFFEREDIMAGES INTO UWECIMAGES
-		return imList;
-	}
 
 	public Color averageImageColor() {
 		return averageImageColor(0, 0, getWidth(), getHeight());
@@ -166,7 +150,8 @@ public class UWECImage {
 
 		if ((startX + width > getWidth()) || (startY + height > getHeight())) {
 			System.out.println("Coordinants out of picture.");
-			System.exit(0); // exits program??
+			
+			//System.exit(0); // exits program
 		}
 
 		for (int y = startY; y < height; y++) {
@@ -181,6 +166,7 @@ public class UWECImage {
 		aveGreen = totalGreen / numPixels;
 
 		Color aveColor = new Color(aveRed, aveGreen, aveBlue);
+		
 
 		return aveColor;
 	}

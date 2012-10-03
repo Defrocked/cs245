@@ -4,14 +4,6 @@ public class Main {
 	public static void main(String[] args) {
 		// Define the names of the files/folders and the number of tiles to use
 		// in the mosaic
-		
-		/*MIKEY
-		 * DO UWECIMAGE SCALING
-		 * AND MOSAICMAKER CONSTRUCTOR
-		 *GAVIN
-		 *DO UWECIMAGE AVERAGECOLOR
-		 *AND OTHER PICTURE MUTATING THINGS 	
-		 */
 		String originalFilename = "NYCcentralPark.jpg";
 		String mosaicFilename = "NYCmosaic.jpg";
 		String tileFolder = "dvdReleases";
@@ -26,14 +18,17 @@ public class Main {
 		UWECImage originalImage = new UWECImage(originalFilename);
 		
 //		//TESTS TO MAKE SURE THE ORIGINAL IMAGE IS IN THE RIGHT PLACE BY DISPLAYING IT
-//		ImagePanel ima = new ImagePanel(originalImage);
+		
 	
 		// Form a mosaic of the original image
 		UWECImage mosaicImage = mm.createMosaic(originalImage);
 		// Write out the mosaic version
+		ImagePanel ima = new ImagePanel(mosaicImage);
+		ima.repaint();
 		mosaicImage.write(mosaicFilename);
 		// At this point we could mosaic another image to the same size as the
 		// one above if we wished...
+		
 		System.out.println("Finished");
 	}
 }
