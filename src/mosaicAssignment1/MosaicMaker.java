@@ -9,6 +9,7 @@ public class MosaicMaker {
 	 * write the constructor and use the uwecimage scaling class 
 	 * 
 	 */
+	
 	private String tileFolder;
 	private int horzMosaicSize;
 	private int vertMosaicSize;
@@ -43,7 +44,7 @@ public class MosaicMaker {
 		
 		for(int i = 0; i <fileArray.length; i++){
 			//makes our list of file pathnames into image files
-			UWECImage fileToImage = new UWECImage(fileArray[i]);
+			UWECImage fileToImage = new UWECImage("dvdReleases/" + fileArray[i]);
 			
 			//scales our images based on our earlier calculation
 			fileToImage.scaleImage(tileWidth, tileHeight);

@@ -12,6 +12,7 @@ public class UWECImage {
 
 	// Make an image from the given filename
 	public UWECImage(String filename) {
+		this.imList = new ArrayList<BufferedImage>();
 		File f = new File(filename);
 
 		try {
@@ -25,7 +26,7 @@ public class UWECImage {
 
 	// Make a blank image given the size
 	public UWECImage(int x, int y) {
-		this.imList = new ArrayList<BufferedImage>();
+		
 		this.im = new BufferedImage(x, y, BufferedImage.TYPE_INT_RGB);
 
 		// Create a graphics context for the new BufferedImage
@@ -85,6 +86,7 @@ public class UWECImage {
 	}
 
 	public void write(String filename) {
+		filename += ".png";
 		if (filename.endsWith(".png")) {
 			writePNG(filename);
 		} else {
