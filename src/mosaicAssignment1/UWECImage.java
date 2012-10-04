@@ -133,7 +133,6 @@ public class UWECImage {
 		}
 		im = newIm;
 	}
-	
 
 	public Color averageImageColor() {
 		return averageImageColor(0, 0, getWidth(), getHeight());
@@ -148,14 +147,14 @@ public class UWECImage {
 		int aveBlue;
 		int aveGreen;
 
-		if ((startX + width > getWidth()) || (startY + height > getHeight())) {
+		if ((startX + width > 640) || (startY + height > 480)) {
 			System.out.println("Coordinants out of picture.");
-			
-			//System.exit(0); // exits program
+
+			System.exit(0); // exits program
 		}
 
-		for (int y = startY; y < height; y++) {
-			for (int x = startX; x < width; x++) {
+		for (int y = startY; y < startY + height; y++) {
+			for (int x = startX; x < startX + width; x++) {
 				totalRed += getRed(x, y);
 				totalBlue += getBlue(x, y);
 				totalGreen += getGreen(x, y);
@@ -166,7 +165,6 @@ public class UWECImage {
 		aveGreen = totalGreen / numPixels;
 
 		Color aveColor = new Color(aveRed, aveGreen, aveBlue);
-		
 
 		return aveColor;
 	}

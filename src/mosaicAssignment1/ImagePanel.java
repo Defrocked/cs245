@@ -17,7 +17,7 @@ public class ImagePanel extends JPanel {
 		this.setSize(im.getWidth(), im.getHeight());
 
 		// Setup the frame that I belong in
-		JFrame frame = new JFrame("Image Convolution");
+		JFrame frame = new JFrame("Mosaic Assignment");
 		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				System.exit(1);
