@@ -1,18 +1,19 @@
 package mosaicAssignment1;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.io.File;
 import java.util.ArrayList;
 
 public class MosaicMaker {
+	@SuppressWarnings("unused")
 	private String tileFolder;
 	private int horzMosaicSize;
 	private int vertMosaicSize;
 	private int horzNumTiles;
+	@SuppressWarnings("unused")
 	private int vertNumTiles;
 	private ArrayList<UWECImage> imageAL;
-	private ArrayList<Color> imageColourAL;
+	private static ArrayList<Color> imageColourAL;
 	private int tileHeight;
 	private int tileWidth;
 
@@ -31,7 +32,7 @@ public class MosaicMaker {
 		// colours
 		String[] fileArray;
 		this.imageAL = new ArrayList<UWECImage>();
-		this.imageColourAL = new ArrayList<Color>();
+		MosaicMaker.imageColourAL = new ArrayList<Color>();
 
 		// lists the files in the folder as an array of abstract pathnames and
 		// assigns to our file array
@@ -60,54 +61,46 @@ public class MosaicMaker {
 
 	/**
 	 * takes the image to be mosaic'd and then splits it up into tile sized
-	 * rectangles (10x10 in our case) get the average colour of each tile using
-	 * uwecimage get the best tile for the colour using find best tile run
-	 * through and colour in the rectangle with the best tile (nested loops --
-	 * NOT uwecimage)
+	 * rectangles (10x10 in our case)
+	 * 
+	 * send everything to the tilefinderthread method to get the average colour,
+	 * find the best tile, and then mosaic the new image
 	 * 
 	 * @param image
 	 * @return blankMosaic
+	 * @throws InterruptedException 
 	 */
 	public UWECImage createMosaic(UWECImage image) {
-		int red = 0;
-		int green = 0;
-		int blue = 0;
 		// scales our mosaic image
 		image.scaleImage(horzMosaicSize, vertMosaicSize);
 
 		// create a new blank uwecimage
 		UWECImage blankMosaic = new UWECImage(horzMosaicSize, vertMosaicSize);
 
-		Color aveColour;
-		// LOOPAN increment by 10x10 since that is the size of our squares?
-		for (int i = 0; i < blankMosaic.getWidth(); i += tileWidth) {
-			for (int j = 0; j < blankMosaic.getHeight(); j += tileHeight) {
-				// set the avecolour to for 10x10 squares
-				aveColour = image.averageImageColor(i, j, tileWidth, tileHeight);
+		// create threads and total number of tiles to be used
+		int numOfThreads = (horzNumTiles); // should be 192 //64
+		TileFinderThread[] tft = new TileFinderThread[numOfThreads];
+		Thread[] ts = new Thread[numOfThreads];
 
-				// find the best tile for the average colour
-				UWECImage bestTile;
-				bestTile = imageAL.get(findBestTile(aveColour));
-
-				// loop to copy the pixels of the best tile to the rectangle of our mosaic
-				for (int k = 0; k < tileWidth; k++) {
-					for (int l = 0; l < tileHeight; l++) {
-						//get the red green and blue values
-						red = bestTile.getRed(k, l);
-						green = bestTile.getGreen(k, l);
-						blue = bestTile.getBlue(k, l);
-						
-						// puts the colour into the new image;
-						blankMosaic.setRGB(k + i, l + j, red, green, blue);
-					}
-				}
+		// start threads
+		for (int i = 0; i < numOfThreads; i++) {
+			tft[i] = new TileFinderThread(blankMosaic, image, tileWidth, tileHeight, imageAL, i);
+			ts[i] = new Thread(tft[i]);
+			ts[i].start();
+		}
+		// wait for all of the tile threads and merge them
+		for (int i = 0; i < numOfThreads; i++) {
+			try {
+				ts[i].join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
 		}
 		return blankMosaic;
 	}
 
 	// Find the tile with the best match to the mosaic.
-	public int findBestTile(Color mosaicColor) {
+	public static int findBestTile(Color mosaicColor) {
 		// int to hold location in array of the best tile.
 		int bestTile = 0;
 		// double to hold the distance of the currently best tile; starts at
