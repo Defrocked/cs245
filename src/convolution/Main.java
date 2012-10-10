@@ -13,6 +13,7 @@ public class Main {
 		}
 
 		// Display the original image in a Panel
+		@SuppressWarnings("unused")
 		ImagePanel inPanel = new ImagePanel(in);
 
 		// Make a mask

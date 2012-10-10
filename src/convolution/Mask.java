@@ -5,6 +5,7 @@ public class Mask {
 	private double[][] theMask;
 	private double bias;
 
+	@SuppressWarnings("unused")
 	public Mask() {
 		// Sharpening mask
 		double[][] sharp = { { 0d, -1d, 0d },

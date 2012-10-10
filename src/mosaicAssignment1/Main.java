@@ -19,12 +19,9 @@ public class Main {
 		// Form a mosaic of the original image
 		UWECImage mosaicImage = mm.createMosaic(originalImage);
 		// Write out the mosaic version
-		ImagePanel ima = new ImagePanel(mosaicImage);
-		ima.repaint();
 		mosaicImage.write(mosaicFilename);
 		// At this point we could mosaic another image to the same size as the
-		// one above if we wished...
-		
+		// one above if we wished...	
 		System.out.println("Finished");
 	}
 }

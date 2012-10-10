@@ -10,6 +10,7 @@ public class DLList<T> implements ListIf<T> {
 			// class
 			private T element;
 			private Node next;
+			@SuppressWarnings("unused")
 			private Node prev;
 
 			public Node(T o) {
