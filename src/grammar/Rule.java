@@ -3,6 +3,13 @@ package grammar;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * RULE
+ * new'ing Rule will instantiate the arraylist and random number generator
+ * toString that runs through the arraylist.get(index) and combines them into one string
+ * addProductions takes Productions and throws them in the arraylist
+ * getRandom should get a random Production and return it as a string
+ */
 public class Rule {
 	ArrayList<Productions> alProductions;
 	String productions;

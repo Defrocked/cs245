@@ -10,12 +10,21 @@ import java.util.Stack;
 public class Grammar {
 
 	Map<String, Rule> m;
+	int keyCounter;
 
-	// Constructor where the file with the grammar is taken in and organized
+	/**
+	 * GRAMMAR CONSTRUCTOR
+	 * okay, we use a hashmap here with the key (nonterminal in <angle brackets>) and the value (the rule) to organize
+	 * use File and Scanner to open and readin our info
+	 * first while loop is an outer loop to make the rules and set the key
+	 * inner while loop is to get the productions and put them in the Rule class's arraylist
+	 * finally, take the key and rules and stick them in the hashmap
+	 */
 	public Grammar(String fileName) throws FileNotFoundException {
 		m = new HashMap<String, Rule>();
 		File file = new File(fileName);
 		Scanner s = new Scanner(file);
+		keyCounter = 0;
 
 		while (s.hasNextLine()) { // loop in a loop, outside to go through and make rules
 			String str = s.nextLine();
@@ -23,6 +32,7 @@ public class Grammar {
 			//check to get the key & create a new rule
 			if (str.startsWith("<")) {
 				String key = str;
+				keyCounter++;
 				Rule r = new Rule();
 				 //System.out.println(str);
 				while (!s.nextLine().equals("")) { // inside for the productions for each loop
@@ -40,8 +50,12 @@ public class Grammar {
 		s.close();
 	}
 
+	/**
+	 * GENERATE SENTENCE
+	 * writes out the sentence somehow idk 
+	 */
 	public String generateSentence() {
-		//Productions p = new Productions(m.get("<start>").getRandom());
+		
 		String result = "";
 		Stack<String> s = new Stack<String>();
 		Rule curRule;
@@ -49,12 +63,13 @@ public class Grammar {
 		Symbol curSymbol = null;
 		String curKey = "<start>";
 		int i = 0;
+		s.push("<start>");
 
-		while (i < 3) { //i dont understand why this is out of 3
+		while (i < keyCounter) { //keyCounter increments every time we make a new key (aka hits a nonterminal)	
 			curRule = m.get(curKey);
-			// System.out.println(curRule);
 			curPro = curRule.alProductions.get(0);
 			curSymbol = curPro.queuePeek();
+			//System.out.println(curSymbol.toString());
 			if (curSymbol.isTerminal()) {
 				result += " " + curSymbol.toString();
 				System.out.println(result);
