@@ -17,54 +17,55 @@ public class Grammar {
 		File file = new File(fileName);
 		Scanner s = new Scanner(file);
 
-		int count = 0;
-		
-		while (s.hasNextLine()) { //loop in a loop, outside to go through and make rules
+		while (s.hasNextLine()) { // loop in a loop, outside to go through and make rules
 			String str = s.nextLine();
-			Rule r = new Rule();
-//			System.out.println(str);
-//			System.out.println(count);
-			str = s.nextLine();
-			while (!s.nextLine().equals("")) { //inside for the productions for each loop
-
-				
-//				System.out.println(str);
-				Productions nProduction = new Productions(str);
-				r.addProductions(nProduction);
-				//r.addProductions(nProduction.toString());
-			}
-			m.put(str, r);
-//			System.out.println(m.toString());
-			count ++;
+			
+			//check to get the key & create a new rule
+			if (str.startsWith("<")) {
+				String key = str;
+				Rule r = new Rule();
+				 //System.out.println(str);
+				while (!s.nextLine().equals("")) { // inside for the productions for each loop
+					s.nextLine();
+					// System.out.println(str);
+					Productions nProduction = new Productions(str);
+					r.addProductions(nProduction);
+					//System.out.println(r.alProductions.size());
+					// r.addProductions(nProduction.toString());
+				}
+				m.put(key, r);
+			}	
+			// System.out.println(m.toString());
 		}
 		s.close();
 	}
 
 	public String generateSentence() {
-        String result = "";
-        Stack<String> s = new Stack<String>();
-        Rule curRule;
-        Productions curPro;
-        Symbol curSymbol = null;
-        String curKey = "<start>";
-        int i = 0;
+		//Productions p = new Productions(m.get("<start>").getRandom());
+		String result = "";
+		Stack<String> s = new Stack<String>();
+		Rule curRule;
+		Productions curPro;
+		Symbol curSymbol = null;
+		String curKey = "<start>";
+		int i = 0;
 
-        while (i < 3) {
-            curRule = m.get(curKey);
-            //System.out.println(curRule);
-            curPro = curRule.alProductions.get(0);
-            curSymbol =  curPro.queuePeek();
-            if (curSymbol.isTerminal()) {
-                result += " " + curSymbol.toString();
-                System.out.println(result);
-            } else {
-                System.out.println(curSymbol.toString());
-                curKey = curSymbol.toString();
-            }
-            i++;
+		while (i < 3) { //i dont understand why this is out of 3
+			curRule = m.get(curKey);
+			// System.out.println(curRule);
+			curPro = curRule.alProductions.get(0);
+			curSymbol = curPro.queuePeek();
+			if (curSymbol.isTerminal()) {
+				result += " " + curSymbol.toString();
+				System.out.println(result);
+			} else {
+				System.out.println(curSymbol.toString());
+				curKey = curSymbol.toString();
+			}
+			i++;
 
-        }
-        return result;
+		}
+		return result;
 	}
 
 }

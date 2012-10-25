@@ -30,8 +30,8 @@ public class Rule {
 		alProductions.add(p);
 	}
 
-	public Productions getRandom() {
+	public String getRandom() {
 		//get a random production between 0 and the # of productions
-		return alProductions.get(gen.nextInt(alProductions.size()));
+		return alProductions.get(gen.nextInt(Math.abs(alProductions.size()))).toString();
 	}
 }
