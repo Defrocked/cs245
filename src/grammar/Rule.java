@@ -1,25 +1,37 @@
 package grammar;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Rule {
-	// List of productions that follow the rule
 	ArrayList<Productions> alProductions;
-	String rule;
 	String productions;
-	
-	public Rule(String rule) {
-		this.rule = rule;
+	Random gen;
+
+	public Rule() {
+		//instantiate the list and random number generator
 		alProductions = new ArrayList<Productions>();
-		
+		gen = new Random();
+
 	}
-	
-	public String toString(){
-		
-		return rule;
+
+	public String toString() {
+		String temp = "";
+		for (int i = 0; i < alProductions.size(); i++) {
+			temp = temp + alProductions.get(i);
+		}
+
+		return temp;
+
 	}
-	
+
 	public void addProductions(Productions p) {
+		//add productions to the list
 		alProductions.add(p);
+	}
+
+	public Productions getRandom() {
+		//get a random production between 0 and the # of productions
+		return alProductions.get(gen.nextInt(alProductions.size()));
 	}
 }

@@ -14,5 +14,10 @@ public class Terminal implements Symbol {
 	
 		return symbol;
 	}
+
+	@Override
+	public boolean isTerminal() {
+		return terminal;
+	}
 	
 }

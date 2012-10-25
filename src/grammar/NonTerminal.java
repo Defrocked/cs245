@@ -15,4 +15,9 @@ public class NonTerminal implements Symbol {
 		return symbol;
 	}
 
+	@Override
+	public boolean isTerminal() {
+		return terminal;
+	}
+
 }

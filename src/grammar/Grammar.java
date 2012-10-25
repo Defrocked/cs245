@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class Grammar {
 
@@ -15,40 +16,55 @@ public class Grammar {
 		m = new HashMap<String, Rule>();
 		File file = new File(fileName);
 		Scanner s = new Scanner(file);
-		String str;
-		Rule r;
-		Productions nProduction;
+
 		int count = 0;
 		
 		while (s.hasNextLine()) { //loop in a loop, outside to go through and make rules
-			str = s.nextLine();
-			r = new Rule(str);
-			System.out.println(str);
-			System.out.println(count);
+			String str = s.nextLine();
+			Rule r = new Rule();
+//			System.out.println(str);
+//			System.out.println(count);
 			str = s.nextLine();
 			while (!s.nextLine().equals("")) { //inside for the productions for each loop
 
-				/* 
-				 * this is what i was working on when i stopped. goal is to run through, make a rule out of the angled bracketed line
-				 * then go to the next line, read in stuff until it hits the "", and put everything it reads in into an array with that rule
-				 * then it adds it to the map, then loops back and makes a new rule
-				 * 
-				 * i do not guarantee that this is working the way we want it but it seems to be okay
-				 */
-				System.out.println(str);
-				nProduction = new Productions(str);
+				
+//				System.out.println(str);
+				Productions nProduction = new Productions(str);
 				r.addProductions(nProduction);
+				//r.addProductions(nProduction.toString());
 			}
 			m.put(str, r);
-			System.out.println(m.toString());
+//			System.out.println(m.toString());
 			count ++;
 		}
 		s.close();
 	}
 
 	public String generateSentence() {
-		
-		return null; //THIS IS WHERE THE NULL AND THE END OF THE SYSOUTS IS COMING FROM, you can ignore it for now
+        String result = "";
+        Stack<String> s = new Stack<String>();
+        Rule curRule;
+        Productions curPro;
+        Symbol curSymbol = null;
+        String curKey = "<start>";
+        int i = 0;
+
+        while (i < 3) {
+            curRule = m.get(curKey);
+            //System.out.println(curRule);
+            curPro = curRule.alProductions.get(0);
+            curSymbol =  curPro.queuePeek();
+            if (curSymbol.isTerminal()) {
+                result += " " + curSymbol.toString();
+                System.out.println(result);
+            } else {
+                System.out.println(curSymbol.toString());
+                curKey = curSymbol.toString();
+            }
+            i++;
+
+        }
+        return result;
 	}
 
 }
