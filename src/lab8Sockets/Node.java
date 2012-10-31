@@ -6,22 +6,34 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.*;
+import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
 
 public class Node {
 
 	public static void main(String[] args) {
-		Integer start = null;
-		Integer end = null;
-		
-		
+		Integer start = 0;
+		Integer end = 0;
+		Integer stripe = 0;
+		Integer sNum = 0;
+		ArrayList<Integer> al = new ArrayList<Integer>();
+
 		try {
-			ServerSocket ss = new ServerSocket(1000);
+			ServerSocket ss = new ServerSocket(Integer.parseInt(JOptionPane.showInputDialog("port number: ")));
 			Socket s = ss.accept();
 			ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
-			start =  (Integer) ois.readObject();
-			end =  (Integer) ois.readObject();
-			
+			//BLOCKING
+//			start =  (Integer) ois.readObject();
+//			end =  (Integer) ois.readObject();
+			//STRIPED
+			start = (Integer) ois.readObject();
+			end = (Integer) ois.readObject();
+			stripe = (Integer) ois.readObject();
+			sNum = (Integer) ois.readObject();
+			for(int k = start.intValue() +  sNum; k < end.intValue(); k += stripe){
+				al.add((Integer) k);
+			}
 			ss.close();
 			
 		} catch (IOException e) {
@@ -32,34 +44,27 @@ public class Node {
 			e1.printStackTrace();
 		}
 		
-		
-		
-		
 		int count = 0;
-		ArrayList<String> al = new ArrayList<String>();
-
-		for (int i=start.intValue(); i<=end.intValue(); i++) {
-			if (isPrime(i)) {
+		//BLOCKING
+//		for (int i=start.intValue(); i<=end.intValue(); i++) {
+//			if (isPrime(i)) {
+//				count++;
+//			}
+//		}
+		//STRIPING
+		for(int i = 0; i < al.size(); i++){
+			if(isPrime(al.get(i))){
 				count++;
-				al.add(i +"");
 			}
 		}
 		
-		//System.out.println("count = " + count);
-//		for (int i = 0; i < al.size(); i++) {
-//			System.out.println(al.get(i));
-//		}
+		System.out.println("count = " + count);
 		
 		try {
 			Socket toMaster = new Socket("localhost", 9999);
 			ObjectOutputStream oos = new ObjectOutputStream(toMaster.getOutputStream());
 			
 			oos.writeObject(new Integer(count));
-			for(int i = 0; i < al.size(); i++){
-				oos.writeObject(al.remove(i));
-			}
-			
-			
 			
 			toMaster.close();
 		} catch (UnknownHostException e) {
