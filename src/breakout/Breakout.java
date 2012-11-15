@@ -28,9 +28,9 @@ public class Breakout {
 		
 		breakout = new BreakoutPanel();
 		
-		bcal = new ArrayList<BreakoutComponent>(10);
+		bcal = new ArrayList<BreakoutComponent>();
 		
-		Brick b = new Brick(20, 20, 40, 10);
+		Brick b = new Brick(20, 130, 400, 10);
 		Wall w = new Wall(0,0,530,10);
 		Wall w1 = new Wall(0,0,10,430);
 		Wall w2 = new Wall(520,0,10,430);
@@ -76,16 +76,23 @@ public class Breakout {
 			
 			for (int i = 0; i < mcal.size(); i ++){
 				mcal.get(i).updatePosition();
-//				bcal.add(5, new Ball(mcal.get(i)));
+				bcal.add(5, (BreakoutComponent) mcal.get(i));
 			}
-			System.out.println(mcal.get(0));
+			
+			
+//			System.out.println(mcal.get(0));
 			System.out.println(bcal.get(5));
-//			breakout.addComponent(ba);
-			Brick brick = new Brick(100, 20, 40, 10);
-			bcal.add(5, brick);
+////			breakout.addComponent(ba);
+//			Brick brick = new Brick(100, 20, 40, 10);
+//			bcal.add(5, brick);
+			
+			for (int i = 0; i < mcal.size(); i ++){
+				mcal.get(i).collisionCheck(bcal);
+			}
+			
 			breakout.repaint();
 			ct = System.currentTimeMillis();
-			while(System.currentTimeMillis() < ct + 100){
+			while(System.currentTimeMillis() < ct + 20){
 				
 			}
 		}
