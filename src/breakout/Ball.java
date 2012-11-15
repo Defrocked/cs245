@@ -3,8 +3,9 @@ package breakout;
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.util.ArrayList;
-
+@SuppressWarnings("unused")
 public class Ball extends BreakoutComponent implements MovingComponent {
+	
 	private int x;
 	private int y;
 	private int w;
@@ -48,7 +49,7 @@ public class Ball extends BreakoutComponent implements MovingComponent {
 					horizontalCollision();				
 				} else if (super.r.intersectsLine(cr.x, cr.y, cr.x, cr.y + cr.height) || super.r.intersectsLine(cr.x + cr.width, cr.y, cr.x + cr.width, cr.y + cr.height)) {
 					verticalCollision();
-					System.out.println("tester");
+					System.out.println("retset");
 				}
 			}
 		}

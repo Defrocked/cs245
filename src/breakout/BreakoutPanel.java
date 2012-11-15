@@ -1,12 +1,12 @@
 package breakout;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
-import java.util.ArrayList;
+
 
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class BreakoutPanel extends JPanel{
 
 	
